@@ -8,25 +8,22 @@
 
 This project represents a **case study of a desktop productivity tool** designed to improve engineering workflows by synchronizing **technical drawings** and **structured data** side by side.
 
-The tool was created to reduce context switching, improve understanding, and drastically shorten onboarding time for new team members.
-
-> ⚠️ This repository contains a **demonstration version** and documentation only.  
-> No proprietary data, company identifiers, or production code are included.
+The tool was created to reduce context switching, improve understanding, and drastically shorten onboarding time for new team members in complex technical environments.
 
 ---
 
 ## 🚩 Problem
 
 Engineering teams often work with:
-- Large technical drawings (images, schematics)
+- Large technical drawings (schematics, wiring diagrams, blueprints)
 - Complex spreadsheets or structured datasets
 - Multiple tools and windows open simultaneously
 
 ### Before the tool:
-- ❌ Constant context switching
-- 🧠 High cognitive load
-- 🕒 Long onboarding time for new engineers
-- 📉 Reduced productivity and understanding
+- ❌ Constant context switching between files and tools  
+- 🧠 High cognitive load to correlate visual and tabular information  
+- 🕒 Long onboarding time for new engineers  
+- 📉 Reduced productivity and higher dependency on senior team members  
 
 ---
 
@@ -35,10 +32,13 @@ Engineering teams often work with:
 I designed and implemented a **dual-pane desktop application** that:
 - Displays technical drawings on one side
 - Displays structured data on the other
-- Keeps context aligned visually and logically
+- Keeps visual and data context aligned
 - Enables faster interpretation and decision-making
 
-The tool was designed with **clarity and usability** as top priorities.
+The application prioritizes:
+- Clarity over complexity  
+- Usability for both experienced and junior engineers  
+- Minimal training requirements  
 
 ---
 
@@ -47,7 +47,7 @@ The tool was designed with **clarity and usability** as top priorities.
 - ⏱️ Reduced task execution time by **~50%**
 - 🎓 Enabled new engineers to become productive after **~1 hour of training**
 - 🧠 Improved understanding of complex engineering artifacts
-- 🔁 Reduced dependency on senior engineers for onboarding
+- 🔁 Reduced onboarding dependency on senior engineers
 
 ---
 
@@ -55,9 +55,9 @@ The tool was designed with **clarity and usability** as top priorities.
 
 - Sole developer
 - Desktop UI/UX design
-- Architecture and implementation
-- Iterative UX improvements based on user feedback
-- AI-assisted development to accelerate coding and refactoring
+- System architecture and implementation
+- Iterative UX improvements based on real user feedback
+- AI-assisted development used to accelerate coding, refactoring, and iteration
 
 ---
 
@@ -67,7 +67,7 @@ The tool was designed with **clarity and usability** as top priorities.
 - PySide6 (Desktop UI)
 - pandas
 - openpyxl
-- Desktop-first architecture
+- Desktop-first application architecture
 
 ---
 
@@ -77,12 +77,28 @@ The tool was designed with **clarity and usability** as top priorities.
 
 ---
 
+## 📦 Code Availability
+
+This project is presented as a **technical case study**.
+
+The original application contains proprietary logic and client-specific integrations developed under a confidentiality agreement.  
+For this reason, the source code is **not publicly shared**.
+
+The focus of this repository is to document:
+- the problem being solved
+- the solution approach
+- architectural and UX decisions
+- and the measurable impact of the tool
+
+---
+
 ## 🔒 Legal & Confidentiality
 
-This project is shared as a **technical case study**:
-- No proprietary assets
-- No production datasets
-- No company identifiers
+- No proprietary assets are included  
+- No production datasets are shared  
+- No company or client identifiers are exposed  
+
+This repository is intended solely for **professional and educational demonstration purposes**.
 
 ---
 
@@ -90,6 +106,6 @@ This project is shared as a **technical case study**:
 
 This case study demonstrates my ability to:
 - Design intuitive desktop applications
-- Optimize real-world workflows
+- Optimize real-world engineering workflows
 - Reduce onboarding friction
-- Deliver production-grade internal tools
+- Deliver production-grade internal tools with measurable impact
