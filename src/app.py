@@ -7,6 +7,10 @@ from PySide6.QtGui import QBrush, QColor, QFont, QPen
 from PySide6.QtWidgets import (
     QAbstractItemView,
     QApplication,
+    QComboBox,
+    QDialog,
+    QDialogButtonBox,
+    QFormLayout,
     QFrame,
     QGraphicsRectItem,
     QGraphicsScene,
@@ -15,10 +19,13 @@ from PySide6.QtWidgets import (
     QHBoxLayout,
     QHeaderView,
     QLabel,
+    QLineEdit,
     QMainWindow,
+    QMessageBox,
     QPushButton,
     QTableWidget,
     QTableWidgetItem,
+    QTextEdit,
     QVBoxLayout,
     QWidget,
 )
@@ -38,6 +45,75 @@ from styles import (
 )
 
 
+class AddComponentDialog(QDialog):
+    """Small form used to create a fictional component during the demo session."""
+
+    def __init__(self, parent: QWidget | None = None) -> None:
+        super().__init__(parent)
+        self.setWindowTitle("Add Component")
+        self.setMinimumWidth(420)
+
+        self.id_input = QLineEdit()
+        self.id_input.setPlaceholderText("Example: SEN-006")
+
+        self.name_input = QLineEdit()
+        self.name_input.setPlaceholderText("Example: Sensor Assembly")
+
+        self.category_input = QComboBox()
+        self.category_input.addItems([
+            "Module",
+            "Cable",
+            "Mechanical",
+            "Connector",
+            "Terminal",
+            "Sensor",
+            "Review Item",
+        ])
+
+        self.status_input = QComboBox()
+        self.status_input.addItems([
+            "Ready for review",
+            "Needs validation",
+            "Updated",
+            "Draft",
+            "Blocked",
+        ])
+
+        self.owner_input = QLineEdit()
+        self.owner_input.setPlaceholderText("Example: Systems Team")
+
+        self.notes_input = QTextEdit()
+        self.notes_input.setPlaceholderText("Short fictional note for this public demo component.")
+        self.notes_input.setFixedHeight(90)
+
+        form = QFormLayout()
+        form.addRow("ID", self.id_input)
+        form.addRow("Name", self.name_input)
+        form.addRow("Category", self.category_input)
+        form.addRow("Status", self.status_input)
+        form.addRow("Owner", self.owner_input)
+        form.addRow("Notes", self.notes_input)
+
+        buttons = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel)
+        buttons.accepted.connect(self.accept)
+        buttons.rejected.connect(self.reject)
+
+        layout = QVBoxLayout(self)
+        layout.addLayout(form)
+        layout.addWidget(buttons)
+
+    def get_component_data(self) -> dict[str, str]:
+        """Return sanitized values entered by the user."""
+        return {
+            "id": self.id_input.text().strip(),
+            "name": self.name_input.text().strip(),
+            "category": self.category_input.currentText().strip(),
+            "status": self.status_input.currentText().strip(),
+            "owner": self.owner_input.text().strip(),
+            "notes": self.notes_input.toPlainText().strip(),
+        }
+
+
 class DualPaneDemo(QMainWindow):
     """Main window for the public dual-pane productivity demo."""
 
@@ -46,6 +122,7 @@ class DualPaneDemo(QMainWindow):
         self.setWindowTitle(WINDOW_TITLE)
         self.resize(1180, 720)
 
+        self.components = [dict(component) for component in COMPONENTS]
         self.component_items: dict[str, QGraphicsRectItem] = {}
         self.component_labels: dict[str, QGraphicsTextItem] = {}
         self.selected_component_id: str | None = None
@@ -71,6 +148,9 @@ class DualPaneDemo(QMainWindow):
         self.detail_label.setWordWrap(True)
         self.detail_label.setFrameShape(QFrame.StyledPanel)
         self.detail_label.setStyleSheet("padding: 12px; background: #FFFFFF;")
+
+        self.add_button = QPushButton("+ Add Component")
+        self.add_button.clicked.connect(self.open_add_component_dialog)
 
         self.clear_button = QPushButton("Clear Selection")
         self.clear_button.clicked.connect(self.clear_selection)
@@ -116,9 +196,15 @@ class DualPaneDemo(QMainWindow):
         right_title.setFont(QFont("Segoe UI", 11, QFont.Bold))
         right_panel.addWidget(right_title)
         right_panel.addWidget(self.table)
+
+        actions_layout = QHBoxLayout()
+        actions_layout.addWidget(self.add_button)
+        actions_layout.addStretch()
+        actions_layout.addWidget(self.clear_button)
+        right_panel.addLayout(actions_layout)
+
         right_panel.addWidget(QLabel("Selected component details"))
         right_panel.addWidget(self.detail_label)
-        right_panel.addWidget(self.clear_button, alignment=Qt.AlignRight)
 
         content_layout.addLayout(left_panel, stretch=3)
         content_layout.addWidget(right_panel_widget, stretch=2)
@@ -127,8 +213,9 @@ class DualPaneDemo(QMainWindow):
         self.setCentralWidget(root)
 
     def _populate_table(self) -> None:
-        self.table.setRowCount(len(COMPONENTS))
-        for row, component in enumerate(COMPONENTS):
+        self.table.blockSignals(True)
+        self.table.setRowCount(len(self.components))
+        for row, component in enumerate(self.components):
             values = [
                 component["id"],
                 component["name"],
@@ -140,15 +227,18 @@ class DualPaneDemo(QMainWindow):
                 item = QTableWidgetItem(value)
                 item.setData(Qt.UserRole, component["id"])
                 self.table.setItem(row, column, item)
+        self.table.blockSignals(False)
 
     def _draw_diagram(self) -> None:
         self.scene.clear()
         self.component_items.clear()
         self.component_labels.clear()
 
-        self.scene.addText("Fictional Technical Assembly Review").setPos(70, 20)
+        title = self.scene.addText("Fictional Technical Assembly Review")
+        title.setDefaultTextColor(QColor(TEXT_COLOR))
+        title.setPos(70, 20)
 
-        for component in COMPONENTS:
+        for component in self.components:
             x, y, width, height = component["rect"]
             rect_item = QGraphicsRectItem(x, y, width, height)
             rect_item.setBrush(QBrush(QColor(CARD_FILL)))
@@ -164,11 +254,10 @@ class DualPaneDemo(QMainWindow):
             self.component_labels[component["id"]] = label
 
         self._draw_connections()
-        self.scene.setSceneRect(0, 0, 720, 380)
+        self.scene.setSceneRect(0, 0, 760, 520)
 
     def _draw_connections(self) -> None:
         pen = QPen(QColor("#9CA3AF"), 2)
-        self.scene.addLine(270, 125, 270, 125, pen)
         self.scene.addLine(270, 125, 490, 125, pen)
         self.scene.addLine(175, 170, 175, 215, pen)
         self.scene.addLine(572, 175, 512, 240, pen)
@@ -181,6 +270,57 @@ class DualPaneDemo(QMainWindow):
         component_id = selected_items[0].data(Qt.UserRole)
         self.select_component(component_id)
 
+    def _next_component_rect(self) -> tuple[int, int, int, int]:
+        """Return a safe automatic position for a newly added component block."""
+        index = len(self.components)
+        column = index % 3
+        row = index // 3
+        x = 70 + column * 220
+        y = 360 + (row - 1) * 95 if row > 0 else 340
+        return x, y, 175, 70
+
+    def _find_component_row(self, component_id: str) -> int | None:
+        for row in range(self.table.rowCount()):
+            item = self.table.item(row, 0)
+            if item and item.text() == component_id:
+                return row
+        return None
+
+    def open_add_component_dialog(self) -> None:
+        dialog = AddComponentDialog(self)
+        if dialog.exec() != QDialog.Accepted:
+            return
+
+        data = dialog.get_component_data()
+        required_fields = ["id", "name", "owner"]
+        missing = [field for field in required_fields if not data[field]]
+        if missing:
+            QMessageBox.warning(self, "Missing information", "Please fill ID, Name and Owner.")
+            return
+
+        existing_ids = {component["id"] for component in self.components}
+        if data["id"] in existing_ids:
+            QMessageBox.warning(self, "Duplicated ID", "A component with this ID already exists.")
+            return
+
+        component = {
+            "id": data["id"],
+            "name": data["name"],
+            "category": data["category"],
+            "status": data["status"],
+            "owner": data["owner"],
+            "notes": data["notes"] or "User-created fictional component for this public demo session.",
+            "rect": self._next_component_rect(),
+        }
+        self.components.append(component)
+        self._populate_table()
+        self._draw_diagram()
+
+        row = self._find_component_row(component["id"])
+        if row is not None:
+            self.table.selectRow(row)
+        self.select_component(component["id"])
+
     def select_component(self, component_id: str) -> None:
         self.selected_component_id = component_id
         for current_id, rect_item in self.component_items.items():
@@ -191,7 +331,7 @@ class DualPaneDemo(QMainWindow):
                 rect_item.setBrush(QBrush(QColor(CARD_FILL)))
                 rect_item.setPen(QPen(QColor(CARD_OUTLINE), 2))
 
-        component = next(item for item in COMPONENTS if item["id"] == component_id)
+        component = next(item for item in self.components if item["id"] == component_id)
         self.detail_label.setText(
             f"<b>{component['id']} - {component['name']}</b><br>"
             f"Category: {component['category']}<br>"
