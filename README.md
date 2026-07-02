@@ -37,7 +37,9 @@ No real drawings, real datasets, company templates, or internal business rules a
 
 ## 🖼️ Screenshots
 
-Screenshots will be added after the public demo is tested locally.
+### Dual-pane desktop demo
+
+![Dual-pane desktop demo](screenshots/dual_pane_demo.png)
 
 ---
 
@@ -54,7 +56,8 @@ Screenshots will be added after the public demo is tested locally.
 │   ├── confidentiality.md
 │   └── public-demo-scope.md
 ├── screenshots/
-│   └── .gitkeep
+│   ├── .gitkeep
+│   └── dual_pane_demo.png
 ├── requirements.txt
 └── README.md
 ```
