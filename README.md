@@ -1,111 +1,114 @@
 # 🖥️ Engineering Dual-Pane Productivity Tool
 
-**Case Study – Desktop Application for Engineering Workflows**
+**Public demo – Desktop Productivity / Engineering Workflows / Python UI**
+
+This repository contains a **safe public demo** of a dual-pane desktop productivity tool designed to connect visual technical context with structured data.
+
+The professional work that inspired this project was developed in an engineering environment. This public repository is **not** the production tool. It is a simplified, rebuilt-from-scratch implementation using fictional components, generic terminology, and non-proprietary behavior.
 
 ---
 
-## 📌 Overview
+## 📌 Why this project exists
 
-This project represents a **case study of a desktop productivity tool** designed to improve engineering workflows by synchronizing **technical drawings** and **structured data** side by side.
+Engineering workflows often require users to analyze visual artifacts and structured data at the same time. When this information lives in separate windows, files, or systems, the work becomes slower and more cognitively demanding.
 
-The tool was created to reduce context switching, improve understanding, and drastically shorten onboarding time for new team members in complex technical environments.
+This demo shows how a dual-pane interface can help users:
 
----
-
-## 🚩 Problem
-
-Engineering teams often work with:
-- Large technical drawings (schematics, wiring diagrams, blueprints)
-- Complex spreadsheets or structured datasets
-- Multiple tools and windows open simultaneously
-
-### Before the tool:
-- ❌ Constant context switching between files and tools  
-- 🧠 High cognitive load to correlate visual and tabular information  
-- 🕒 Long onboarding time for new engineers  
-- 📉 Reduced productivity and higher dependency on senior team members  
+- 🖼️ view a simplified technical diagram;
+- 📋 inspect structured component data;
+- 🔗 connect visual and tabular context;
+- 🎯 highlight a selected component across both views;
+- 🧠 reduce context switching and interpretation effort.
 
 ---
 
-## ✅ Solution
+## 🧪 Public demo concept
 
-I designed and implemented a **dual-pane desktop application** that:
-- Displays technical drawings on one side
-- Displays structured data on the other
-- Keeps visual and data context aligned
-- Enables faster interpretation and decision-making
+The demo uses a fictional **Technical Assembly Review** scenario.
 
-The application prioritizes:
-- Clarity over complexity  
-- Usability for both experienced and junior engineers  
-- Minimal training requirements  
+The left pane displays a simplified visual diagram. The right pane displays structured data for fictional components. When a user selects a row in the table, the corresponding component is highlighted in the diagram and its details are shown in the status panel.
 
----
-
-## 📈 Impact
-
-- ⏱️ Reduced task execution time by **~50%**
-- 🎓 Enabled new engineers to become productive after **~1 hour of training**
-- 🧠 Improved understanding of complex engineering artifacts
-- 🔁 Reduced onboarding dependency on senior engineers
-
----
-
-## 🧠 My Role
-
-- Sole developer
-- Desktop UI/UX design
-- System architecture and implementation
-- Iterative UX improvements based on real user feedback
-- AI-assisted development used to accelerate coding, refactoring, and iteration
-
----
-
-## 🧰 Tech Stack
-
-- **Python**
-- PySide6 (Desktop UI)
-- pandas
-- openpyxl
-- Desktop-first application architecture
+No real drawings, real datasets, company templates, or internal business rules are included.
 
 ---
 
 ## 🖼️ Screenshots
 
-![Main Interface](docs/screenshot_main.png)
+Screenshots will be added after the public demo is tested locally.
 
 ---
 
-## 📦 Code Availability
+## 📂 Repository structure
 
-This project is presented as a **technical case study**.
-
-The original application contains proprietary logic and client-specific integrations developed under a confidentiality agreement.  
-For this reason, the source code is **not publicly shared**.
-
-The focus of this repository is to document:
-- the problem being solved
-- the solution approach
-- architectural and UX decisions
-- and the measurable impact of the tool
-
----
-
-## 🔒 Legal & Confidentiality
-
-- No proprietary assets are included  
-- No production datasets are shared  
-- No company or client identifiers are exposed  
-
-This repository is intended solely for **professional and educational demonstration purposes**.
+```text
+.
+├── src/
+│   ├── main.py                 # Application entry point
+│   ├── app.py                  # Dual-pane desktop interface
+│   ├── sample_data.py          # Fictional demo component data
+│   └── styles.py               # UI constants
+├── docs/
+│   ├── confidentiality.md
+│   └── public-demo-scope.md
+├── screenshots/
+│   └── .gitkeep
+├── requirements.txt
+└── README.md
+```
 
 ---
 
-## 🧭 Why This Matters
+## 🚀 How to run
 
-This case study demonstrates my ability to:
-- Design intuitive desktop applications
-- Optimize real-world engineering workflows
-- Reduce onboarding friction
-- Deliver production-grade internal tools with measurable impact
+### 1. Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 2. Run the desktop demo
+
+```bash
+python src/main.py
+```
+
+---
+
+## 💼 Professional relevance
+
+This project demonstrates skills in:
+
+- desktop application development;
+- workflow-oriented UI design;
+- structured data presentation;
+- visual-to-data context mapping;
+- engineering productivity tooling;
+- usability-focused automation;
+- safe public documentation of confidential professional work.
+
+It reflects the kind of product I enjoy building: practical desktop tools that reduce cognitive effort, improve clarity, and make complex technical workflows easier to execute.
+
+---
+
+## 📈 Original case study impact
+
+The professional tool that inspired this public demo helped reduce repetitive task execution time by approximately **50%** and enabled new users to become productive after approximately **1 hour of training**.
+
+This public repository demonstrates the concept in a safe, fictional, and simplified way.
+
+---
+
+## 🔒 Confidentiality notice
+
+This repository does **not** include:
+
+- production source code;
+- proprietary algorithms;
+- real datasets;
+- internal company files;
+- client information;
+- confidential business rules;
+- private naming conventions;
+- real technical drawings.
+
+All sample data and visual elements are fictional. All logic was rebuilt from scratch for public demonstration purposes.
