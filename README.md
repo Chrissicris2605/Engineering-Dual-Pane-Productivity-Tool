@@ -18,6 +18,7 @@ This demo shows how a dual-pane interface can help users:
 - 📋 inspect structured component data;
 - 🔗 connect visual and tabular context;
 - 🎯 highlight a selected component across both views;
+- ➕ add fictional components during the demo session;
 - 🧠 reduce context switching and interpretation effort.
 
 ---
@@ -27,6 +28,8 @@ This demo shows how a dual-pane interface can help users:
 The demo uses a fictional **Technical Assembly Review** scenario.
 
 The left pane displays a simplified visual diagram. The right pane displays structured data for fictional components. When a user selects a row in the table, the corresponding component is highlighted in the diagram and its details are shown in the status panel.
+
+Users can also add a new fictional component through a small form. The new item appears in the structured table and is automatically positioned in the visual diagram. Data created during the session is kept in memory only and is not persisted to disk.
 
 No real drawings, real datasets, company templates, or internal business rules are included.
 
@@ -82,6 +85,7 @@ This project demonstrates skills in:
 - workflow-oriented UI design;
 - structured data presentation;
 - visual-to-data context mapping;
+- lightweight interaction design;
 - engineering productivity tooling;
 - usability-focused automation;
 - safe public documentation of confidential professional work.
